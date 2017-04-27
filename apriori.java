@@ -9,15 +9,27 @@ import java.util.*;
  */
 
 public class Apriori {
+
+
     
+        
     public static void main(String[] args) throws Exception {
+        csvparser
         Apriori dataset = new Apriori(args);
     }
 
+    public static setDataSet(String[] args){
+
+    }
+    int itemsetSize = 10; //Frequent Itemset of Size K 
+
     public Apriori(String[] args){
-        ArrayList<String> itemset = new ArrayList<String>();
+        ArrayList<List<Strings>> itemsets = new ArrayList<String>();
         for(int i=0; i<args.length; i++){
+            ArrayList<String> itemset = new ArrayList<String>();
 
         } 
     }
+
+
 }

@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class csvparser {
 
-    private static final char DEFAULT_SEPARATOR = ',';  // Split value
-    private static final char DEFAULT_QUOTE = '"';      // Quote sign
-    private static final int HEADER_ROW = 1;            // Row that contains the column headers
+    private char DEFAULT_SEPARATOR = ',';  // Split value
+    private char DEFAULT_QUOTE = '"';      // Quote sign
+    private int HEADER_ROW = 1;            // Row that contains the column headers
 
-    public static ArrayList<List<String>> csvGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
-    public static ArrayList<List<String>> parsedGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
+    public ArrayList<List<String>> csvGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
+    public ArrayList<List<String>> parsedGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
 
-    public static void main(String[] args) throws Exception {
+    public csvparser(String[] args) throws Exception {
         String csvFile = args[0];
         Scanner scanner = new Scanner(new File(csvFile));
         while (scanner.hasNext()) {
@@ -23,15 +23,15 @@ public class csvparser {
         columnToRow();
     }
 
-    public static List<String> parseLine(String cvsLine) {
+    public List<String> parseLine(String cvsLine) {
         return parseLine(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
     }
 
-    public static List<String> parseLine(String cvsLine, char separators) {
+    public List<String> parseLine(String cvsLine, char separators) {
         return parseLine(cvsLine, separators, DEFAULT_QUOTE);
     }
 
-    public static List<String> parseLine(String cvsLine, char separators, char customQuote) {
+    public List<String> parseLine(String cvsLine, char separators, char customQuote) {
         List<String> result = new ArrayList<>();
 
         //if empty, return!
@@ -98,17 +98,17 @@ public class csvparser {
         return result;
     }
 
-    public static ArrayList<List<String>> columnToRow(){
+    public ArrayList<List<String>> columnToRow(){
         for(int i=0; i<csvGrid.get(HEADER_ROW).size(); i++){
             ArrayList<String> line = new ArrayList<String>();
             for(int j=0; j<csvGrid.size(); j++){
                 line.add(csvGrid.get(j).get(i));
-                if(csvGrid.get(j).get(i) != ""){
+                /*if(csvGrid.get(j).get(i) != ""){
                     System.out.println(csvGrid.get(j).get(i));
-                }
+                }*/
             }
             parsedGrid.add(line);
-            System.out.println("------------------------- Next Attribute -------------------------");
+            //System.out.println("------------------------- Next Attribute -------------------------");
         }
         return parsedGrid;
     }
