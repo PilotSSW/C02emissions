@@ -18,7 +18,9 @@ public class csvparser {
             csvGrid.add(line);
         }
         scanner.close();
+    }
 
+    public static List<String> columnToRow(){
         for(int i=0; i<csvGrid.get(HEADER_ROW).size(); i++){
             for(int j=0; j<csvGrid.size(); j++){
                 if(csvGrid.get(j).get(i) != ""){
