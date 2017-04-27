@@ -10,7 +10,9 @@ public class csvparser {
     private static final int HEADER_ROW = 1;            // Row that contains the column headers
 
     public static void main(String[] args) throws Exception {
-        ArrayList<List<String>> csvGrid = new ArrayList<List<String>>();
+        ArrayList<List<String>> csvGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
+        ArrayList<List<String>> parsedGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
+
         String csvFile = args[0];
         Scanner scanner = new Scanner(new File(csvFile));
         while (scanner.hasNext()) {
@@ -18,15 +20,16 @@ public class csvparser {
             csvGrid.add(line);
         }
         scanner.close();
-    }
 
-    public static List<String> columnToRow(){
         for(int i=0; i<csvGrid.get(HEADER_ROW).size(); i++){
+            List<String> line = new List<String>();
             for(int j=0; j<csvGrid.size(); j++){
+                line.add(csvGrid.get(j).get(i));
                 if(csvGrid.get(j).get(i) != ""){
                     System.out.println(csvGrid.get(j).get(i));
                 }
             }
+            parsedGrid.add(line);
             System.out.println("------------------------- Next Attribute -------------------------");
         }
     }

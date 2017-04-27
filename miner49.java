@@ -5,6 +5,7 @@ import java.util.Scanner;
 import csvparser.java;
 import apriori.java;
 
+package CO2emissions;
 public class miner49 {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Hello from Miner49");
