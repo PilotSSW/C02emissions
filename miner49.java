@@ -42,7 +42,10 @@ public class miner49 {
 				parsedData.printAttributes();
 				parsedData.writeToFile();
 			}
-			String[] attr = parsedData.makeAttributeSet();
+
+			// Initialize a new apriori object and itemize each of the attributes in the attribute set
+			apriori itemized = new apriori();
+			itemized.apriori(attributes);
 
 			//bin binnedAttributes = new bin(attr);
 
