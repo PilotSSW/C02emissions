@@ -45,16 +45,7 @@ public class miner49 {
 
 			// Initialize a new apriori object and itemize each of the attributes in the attribute set
 			apriori itemized = new apriori();
-			itemized.apriori(attributes);
-
-			//bin binnedAttributes = new bin(attr);
-
-			//apriori runtest = new apriori(attr);
-			
-			// Run the apriori implementation 
-			if(DEBUG_APRIORI){
-				System.out.println("Not implemented");
-			}
+			itemized.apriori(attributes, DEBUG_APRIORI);
 		}
 		catch(Exception e){
 			e.printStackTrace();

@@ -166,7 +166,7 @@ public class csvparser {
 
             // Iterate over each value in the attributes
             for(int j=1; j<parsedGrid.get(i).size(); j++){
-                if(parsedGrid.get(i).get(j).equals("")){
+                if(parsedGrid.get(i).get(j).equals("?")){
                     missingValues = true;   
                 }
                 else {
