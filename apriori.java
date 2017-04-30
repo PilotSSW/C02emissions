@@ -5,13 +5,12 @@ import java.util.*;
 public class apriori {
     private boolean DEBUG = false;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception 
+    {
         apriori ap = new apriori(args);
     }
 
 
-
-    /** This is the main interface to use this class as a library */
     public apriori(String[] args) throws Exception
     {
 
