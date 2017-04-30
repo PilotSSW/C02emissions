@@ -44,13 +44,13 @@ public class miner49 {
 			}
 			String[] attr = parsedData.makeAttributeSet();
 
-			bin binnedAttributes = new bin(attr);
+			//bin binnedAttributes = new bin(attr);
 
 			//apriori runtest = new apriori(attr);
 			
 			// Run the apriori implementation 
 			if(DEBUG_APRIORI){
-				System.out.println("Go fuck yourself");
+				System.out.println("Not implemented");
 			}
 		}
 		catch(Exception e){

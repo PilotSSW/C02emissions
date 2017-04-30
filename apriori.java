@@ -7,28 +7,21 @@ public class apriori {
 
     public static void main(String[] args) throws Exception 
     {
-        apriori ap = new apriori(args);
-    }
 
+    }
 
     public apriori(String[] args) throws Exception
     {
 
-
     }
 
-    private void createItemsetsOfSize1() {
-        itemsets = new ArrayList<int[]>();
-        for(int i=0; i<numItems; i++)
-        {
-            int[] cand = {i};
-            itemsets.add(cand);
-        }
+    private void createItemsetsOfSize1() 
+    {
+
     }
     
     private void calculateFrequentItemsets() throws Exception
     {
-        
        
     }
 }

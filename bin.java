@@ -6,11 +6,14 @@ public class bin {
 	public static int defaultNumberofBins = 5; 
 
 	public String[] bin(String[] args){
+		String[] returnArray = new String[1];
+		returnArray[0] = "";
 		//int binLargestLength = findLargestBin(args);
 		for(int i=0; i<args.length; i++){
 			System.out.println(args[i]);
 			//binnify(args[i], binLargestLength);
 		}
+		return returnArray;
 	}
 
 	/*
