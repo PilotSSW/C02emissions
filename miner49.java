@@ -1,36 +1,62 @@
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class miner49 {
+	public static boolean DEBUG_PARSER = false; // Debug turns on print statements for the output from the Parser
+	public static boolean DEBUG_ATTRIBUTES = false; // Debug turns on print statements for the output from Apriori
+	public static boolean DEBUG_APRIORI = false; // Debug turns on print statements for the output from each section
 	public static ArrayList<List<String>> attributes; 
+
 	public static void main(String[] args) throws Exception {
-		System.out.println("Hello from Miner49");
+		try{
+			try {
+				if(args[1].equals("debug_parser")){
+                	DEBUG_PARSER = true;
+				}
+				else if(args[1].equals("debug_attributes")){
+                	DEBUG_ATTRIBUTES = true;
+                }
+                else if(args[1].equals("debug_apriori")){
+                	DEBUG_APRIORI = true;
+                }
+                else if(args[1].equals("debug_all")){
+                	DEBUG_PARSER = true;
+                	DEBUG_ATTRIBUTES = true;
+                	DEBUG_APRIORI = true;
+                }
+            }
+            catch(Exception e){
 
-		// Parse the input csv file
-		csvparser parsedData = new csvparser(args);
+            }
+			String[] newargs = new String[args.length + 1];
+			newargs[0] = args[0]; 
+			newargs[1] = String.valueOf(DEBUG_PARSER);
+			// Parse the input csv file
+			csvparser parsedData = new csvparser(newargs);
 
-		// Convert the parsed input into a list of attributes
-		attributes = parsedData.columnToRow();
+			// Convert the parsed input into a list of attributes
+			attributes = parsedData.columnToRow();
 
-		// Print the attributes
-		printAttributes();
-		
-	}
-
-	public static void printAttributes(){
-		// Print the list 
-
-		// Iterate over each attribute 
-		for(int i=0; i<attributes.size(); i++){
-			// Print the attribute title
-			System.out.println(attributes.get(i).get(1));
-			// Iterate over each value in the attributes
-			for(int j=2; j<attributes.get(i).size(); j++){
-				System.out.print(attributes.get(i).get(j) + " ");
+			// Print the attributes and write them to a file if debugging is enabled
+			if(DEBUG_ATTRIBUTES){
+				parsedData.printAttributes();
+				parsedData.writeToFile();
 			}
-			System.out.println("");
+			String[] attr = parsedData.makeAttributeSet();
+
+			bin binnedAttributes = new bin(attr);
+
+			//apriori runtest = new apriori(attr);
+			
+			// Run the apriori implementation 
+			if(DEBUG_APRIORI){
+				System.out.println("Go fuck yourself");
+			}
 		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Failed to analyze dataset");
+		}
+		
 	}
 }

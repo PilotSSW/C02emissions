@@ -1,26 +1,41 @@
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class csvparser {
-
+    public class ParserException extends Exception
+    {
+      public ParserException(String message)
+      {
+        super(message);
+      }
+    }
+    private boolean DEBUG = false;          // Debug parameter
     private char DEFAULT_SEPARATOR = ',';  // Split value
     private char DEFAULT_QUOTE = '"';      // Quote sign
-    private int HEADER_ROW = 1;            // Row that contains the column headers
+    private int HEADER_ROW = 0;            // Row that contains the column headers
 
     public ArrayList<List<String>> csvGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
     public ArrayList<List<String>> parsedGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
 
-    public csvparser(String[] args) throws Exception {
-        String csvFile = args[0];
-        Scanner scanner = new Scanner(new File(csvFile));
-        while (scanner.hasNext()) {
-            List<String> line = parseLine(scanner.nextLine());
-            csvGrid.add(line);
+    public csvparser(String[] args) throws ParserException {
+        try {
+            String csvFile = args[0];
+            try {
+                DEBUG = Boolean.parseBoolean(args[1]);
+            }
+            catch(Exception e){
+
+            }
+            Scanner scanner = new Scanner(new File(csvFile));
+            while (scanner.hasNext()) {
+                List<String> line = parseLine(scanner.nextLine());
+                csvGrid.add(line);
+            }
+            scanner.close();
         }
-        scanner.close();
-        columnToRow();
+        catch(Exception e){
+            System.out.println("Invalid File specified");
+        }
     }
 
     public List<String> parseLine(String cvsLine) {
@@ -99,17 +114,83 @@ public class csvparser {
     }
 
     public ArrayList<List<String>> columnToRow(){
+        int numRows = 0;
+        // Loop through each of the column headers
+        if(DEBUG){
+            System.out.println(" --------- PARSER ATTRIBUTE CONVERSION OUTPUT --------- ");
+        } 
         for(int i=0; i<csvGrid.get(HEADER_ROW).size(); i++){
             ArrayList<String> line = new ArrayList<String>();
+            // Loop through each of the rows of data
             for(int j=0; j<csvGrid.size(); j++){
                 line.add(csvGrid.get(j).get(i));
-                /*if(csvGrid.get(j).get(i) != ""){
-                    System.out.println(csvGrid.get(j).get(i));
-                }*/
             }
             parsedGrid.add(line);
-            //System.out.println("------------------------- Next Attribute -------------------------");
+            if(DEBUG == true){
+                System.out.println(line);
+            }
+            numRows++;
+        }
+        if(DEBUG == true)
+        {
+            System.out.println("Read " + numRows + " total attributes from csv file");
         }
         return parsedGrid;
+    }
+
+    public String[] makeAttributeSet(){
+        ArrayList<String> attrSet = new ArrayList<String>();
+        for(int i=0; i<parsedGrid.size(); i++){
+            // Iterate over each value in the attributes
+            ArrayList<String> line = new ArrayList<String>();
+            for(int j=0; j<parsedGrid.get(i).size(); j++){
+                line.add(parsedGrid.get(i).get(j) + " ");
+            }
+            String attribute = String.join("",line);
+            attrSet.add(attribute);
+        }
+        return attrSet.toArray(new String[attrSet.size()+1]);
+    }
+
+    public void printAttributes(){
+        // Print the list 
+
+        // Iterate over each attribute 
+        System.out.println("Number of attributes: " + parsedGrid.size());
+        for(int i=0; i<parsedGrid.size(); i++){
+            // Set if there are missing attribute values for this attribute
+            boolean missingValues = false;
+
+            // Print the attribute title
+            System.out.println("---" + parsedGrid.get(i).get(0) + "---");
+
+            // Iterate over each value in the attributes
+            for(int j=1; j<parsedGrid.get(i).size(); j++){
+                if(parsedGrid.get(i).get(j).equals("")){
+                    missingValues = true;   
+                }
+                else {
+                    if(missingValues == true){
+                        System.out.print("[---Missing Values---] ");
+                        missingValues = false;
+                    }
+                    System.out.print(parsedGrid.get(i).get(j) + " ");
+                }
+            }
+            System.out.println("\n");
+        }
+    }
+
+    public void writeToFile(){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("attributes.txt"))) {
+            for(int i=0; i<parsedGrid.size(); i++){
+                for(int j=0; j<parsedGrid.get(i).size(); j++){
+                    bw.write(parsedGrid.get(i).get(j) + " ");
+                }
+                bw.write("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
