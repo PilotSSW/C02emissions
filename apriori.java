@@ -5,20 +5,31 @@ import java.util.*;
 public class apriori {
     private boolean debug = false;
     private int itemsetSize = 1;
-    private double minimum_support = .5; // Minimum support level set to 50%
 
     // Run apriori on each attribute in the attribute set
-    public void apriori(ArrayList<List<String>> attributes, boolean debug){
-        ArrayList<Object> attributesF1Itemsets = new ArrayList<Object>();
+    public void apriori(ArrayList<List<String>> attributes, boolean debug, double minimum_support){
+        ArrayList<Map<String, Double>> attributesF1Itemsets = new ArrayList<Map<String, Double>>();
 
         for(int attribute=0; attribute < attributes.size(); attribute++){
-            Map<String, Double> attributeItemset = createFrequentItemset(attributes.get(attribute), debug);
+            Map<String, Double> attributeItemset = createFrequentItemset(attributes.get(attribute), debug, minimum_support);
             attributesF1Itemsets.add(attributeItemset);
+        }
+
+        if(debug){
+            System.out.println("\nFiltered Attribute Instances \n");
+
+            for(int attribute=0; attribute < attributesF1Itemsets.size(); attribute++){
+                System.out.println("Attribute: " + attributes.get(attribute).get(0));
+                for (Map.Entry<String, Double> key : attributesF1Itemsets.get(attribute).entrySet()) {
+                    System.out.print("                                                                                  " + key.getKey() + ": ");
+                    System.out.println(key.getValue());
+                }
+            }
         }
     }
 
     // The apriori algorithm to run on each attribute 
-    public Map<String, Double> createFrequentItemset(List<String> attribute, boolean debug)
+    public Map<String, Double> createFrequentItemset(List<String> attribute, boolean debug, double minimum_support)
     {   
         // Print out the attribute
         if(debug) System.out.println("Attribute: " + attribute.get(0));
@@ -37,10 +48,10 @@ public class apriori {
 
         // Loop through each of the unqiue instances in the attribute
         for (String key : unique) {
-            // Print for debugging
-
             double supportLevel = ((double) Collections.frequency(attribute, key) / attribute.size());
-            if(debug) System.out.println(key + " : " + Collections.frequency(attribute, key) + " : Support Level : " + Collections.frequency(attribute, key) + "/" + attribute.size() + " - " + supportLevel + "%");
+            
+            // Print for debugging
+            if(debug) System.out.println("      " + String.format("%1$-" + 35 + "s", key) + " : Support Level : " + Collections.frequency(attribute, key) + "/" + attribute.size() + " - " + supportLevel + "%");
             if(supportLevel > minimum_support){
                 instances.put(key, new Double(supportLevel));
             }
