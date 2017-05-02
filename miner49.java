@@ -51,6 +51,8 @@ public class miner49 {
 			// Initialize a new apriori object and itemize each of the attributes in the attribute set
 			apriori itemized = new apriori();
 			itemized.apriori(attributes, DEBUG_APRIORI, minimum_support);
+
+			if(DEBUG_APRIORI) itemized.printItemset();
 		}
 		catch(Exception e){
 			e.printStackTrace();
