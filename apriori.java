@@ -19,10 +19,12 @@ public class apriori {
             attributesF1Itemsets.add(createFrequentItemset(attributes.get(attribute), debug, minimum_support));
         }
 
+        System.out.println("Frequent Itemset2");
         // Generate the frequent 2 itemset 
-        for (Map.Entry<String, Double> entry : attributesF1Itemsets.entrySet())
-        {
-            System.out.println(entry.getKey() + "/" + entry.getValue());
+        for(int attribute1=0; attribute1 < attributes.size(); attribute1++){
+            for(int attribute2=0; attribute2 < attributes.size(); attribute2++){
+                attributesF2Itemsets.add(createFrequentTwoItemset(attributeF1Itemset, attributes.get(attribute1), attributes.get(attribute2), debug, minimum_support) debug, minimum_support))
+            }
         }
         /*
         for(int attribute1=0; attribute1 < attributesF1Itemsets.size(); attribute1++){
@@ -30,8 +32,7 @@ public class apriori {
                 Map<String, Double> attributeItemset = createFrequentTwoItemset(attributesF1Itemsets.get(attribute1), attributesF1Itemsets.get(attribute2), debug, minimum_support);
                 attributesF2Itemsets.add(attributeItemset);
             }
-        }
-        */
+        }*/
     }
 
     // The apriori algorithm to run on each attribute 
@@ -67,48 +68,13 @@ public class apriori {
     }
 
     // The apriori algorithm to run on each attribute 
-    public Map<String, Double> createFrequentTwoItemset(List<String> attribute1, List<String> attribute2, boolean debug, double minimum_support)
+    public Map<String, Double> createFrequentTwoItemset(Map<String, Double> f1Itemset, List<String> attribute1, List<String> attribute2, boolean debug, double minimum_support)
     {   
-        // Print out the attribute
-        if(debug){
-            System.out.println("Attribute 1: " + attribute1.get(0));
-            System.out.println("Attribute 2: " + attribute2.get(0));
-        }
-
-
-        /*
-        // Create a list with the distinct elements using stream.
-        HashSet<String> uniqueA1 = new HashSet<String>(attribute1);
-        HashSet<String> uniqueA2 = new HashSet<String>(attribute2);
-
-        // Remove the attribute name from the instances 
-        uniqueA1.remove(attribute1.get(0));
-        uniqueA2.remove(attribute2.get(0));
-
-        // Remove the null instances in the itemset
-        while(uniqueA1.remove("?")){}
-        while(uniqueA2.remove("?")){}
-
-        // Create a HashMap with the instance, the number of times it's seen and it's support level
-        Map<String, Double> instancesA1 = new HashMap<>();
-        Map<String, Double> instancesA2 = new HashMap<>();
-
-        // Loop through each of the unqiue instances in the attribute
-        for (String key : uniqueA1) {
-            double supportLevel = ((double) Collections.frequency(attribute1, key) / attribute1.size());
-            
-            // Print for debugging
-            if(debug) System.out.println("      " + String.format("%1$-" + 35 + "s", key) + " : Support Level : " + Collections.frequency(attribute1, key) + "/" + attribute1.size() + " - " + supportLevel + " %");
-            if(supportLevel > minimum_support){
-                instancesA1.put(key, new Double(supportLevel));
-            }
-        }
-        if(debug) System.out.println("");
-        return instancesA1;
-        */
+        System.out.println("Attribute1: " + attribute1.get(0));
+        System.out.println("Attribute2: " + attribute2.get(0));
     }
 
-    public void printItemset(){
+    public void printItemset(ArrayList<List<String>> attributes){
         System.out.println("\nFiltered Attribute Instances \n");
 
         for(int attribute=0; attribute < attributesF1Itemsets.size(); attribute++){

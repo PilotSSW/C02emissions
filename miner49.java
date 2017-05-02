@@ -35,22 +35,23 @@ public class miner49 {
 			newargs[1] = String.valueOf(DEBUG_PARSER);
 
 			// Parse the input csv file
-			csvparser parsedData = new csvparser(newargs);
+			csvparser columns = new csvparser(newargs);
+			csvparser rows = new csvparser(newargs);
 
 			// Convert the parsed input into a list of attributes
-			attributes = parsedData.columnToRow();
+			attributes = columns.columnToRow();
 
 			// Print the attributes and write them to a file if debugging is enabled
 			if(DEBUG_ATTRIBUTES){
-				parsedData.printAttributes();
-				parsedData.writeToFile();
+				columns.printAttributes();
+				columns.writeToFile();
 			}
 
 			// Initialize a new apriori object and itemize each of the attributes in the attribute set
 			apriori itemized = new apriori();
 			itemized.apriori(attributes, DEBUG_APRIORI, minimum_support);
 
-			if(DEBUG_APRIORI) itemized.printItemset();
+			if(DEBUG_APRIORI) itemized.printItemset(attributes);
 		}
 		catch(Exception e){
 			e.printStackTrace();

@@ -15,7 +15,7 @@ public class csvparser {
     private int HEADER_ROW = 0;            // Row that contains the column headers
 
     public ArrayList<List<String>> csvGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
-    public ArrayList<List<String>> parsedGrid = new ArrayList<List<String>>(); // Holds the rows of the parsed CSV file 
+    public ArrayList<List<String>> parsedGrid = new ArrayList<List<String>>(); // Holds the columns of the parsed CSV file 
 
     public csvparser(String[] args) throws ParserException {
         try {
