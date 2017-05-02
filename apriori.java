@@ -5,29 +5,33 @@ import java.util.*;
 public class apriori {
     private boolean debug_unfiltered = false;
     private boolean debug_filtered = false;
-
     private int itemsetSize = 1;
+
+    ArrayList<Map<String, Double>> attributesF1Itemsets = new ArrayList<Map<String, Double>>();
+    ArrayList<Map<String, Double>> attributesF2Itemsets = new ArrayList<Map<String, Double>>();
+    ArrayList<Map<String, Double>> attributesF3Itemsets = new ArrayList<Map<String, Double>>();
 
     // Run apriori on each attribute in the attribute set
     public void apriori(ArrayList<List<String>> attributes, boolean debug, double minimum_support){
-        ArrayList<Map<String, Double>> attributesF1Itemsets = new ArrayList<Map<String, Double>>();
-        ArrayList<Map<String, Double>> attributesF2Itemsets = new ArrayList<Map<String, Double>>();
-        ArrayList<Map<String, Double>> attributesF3Itemsets = new ArrayList<Map<String, Double>>();
-
 
         // Generate the frequent 1 itemset 
         for(int attribute=0; attribute < attributes.size(); attribute++){
-            Map<String, Double> attributeItemset = createFrequentItemset(attributes.get(attribute), debug, minimum_support);
-            attributesF1Itemsets.add(attributeItemset);
+            attributesF1Itemsets.add(createFrequentItemset(attributes.get(attribute), debug, minimum_support));
         }
 
         // Generate the frequent 2 itemset 
-        for(int attribute1=0; attribute1 < attributes.size(); attribute1++){
-            for(int attribute2=0; attribute2 < attributes.size(); attribute2++){
-                Map<String, Double> attributeItemset = createFrequentMultipleItemset(attributesF1Itemsets.get(attribute1), attributesF1Itemsets.get(attribute2), debug, minimum_support);
+        for (Map.Entry<String, Double> entry : attributesF1Itemsets.entrySet())
+        {
+            System.out.println(entry.getKey() + "/" + entry.getValue());
+        }
+        /*
+        for(int attribute1=0; attribute1 < attributesF1Itemsets.size(); attribute1++){
+            for(int attribute2=0; attribute2 < attributesF1Itemsets.size(); attribute2++){
+                Map<String, Double> attributeItemset = createFrequentTwoItemset(attributesF1Itemsets.get(attribute1), attributesF1Itemsets.get(attribute2), debug, minimum_support);
                 attributesF2Itemsets.add(attributeItemset);
             }
         }
+        */
     }
 
     // The apriori algorithm to run on each attribute 
@@ -71,6 +75,8 @@ public class apriori {
             System.out.println("Attribute 2: " + attribute2.get(0));
         }
 
+
+        /*
         // Create a list with the distinct elements using stream.
         HashSet<String> uniqueA1 = new HashSet<String>(attribute1);
         HashSet<String> uniqueA2 = new HashSet<String>(attribute2);
@@ -99,6 +105,7 @@ public class apriori {
         }
         if(debug) System.out.println("");
         return instancesA1;
+        */
     }
 
     public void printItemset(){

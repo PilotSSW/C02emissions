@@ -26,8 +26,6 @@ public class miner49 {
                 	DEBUG_ATTRIBUTES = true;
                 	DEBUG_APRIORI = true;
                 }
-                
-
             }
             catch(Exception e){
 
